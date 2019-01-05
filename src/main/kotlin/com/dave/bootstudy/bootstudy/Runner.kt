@@ -3,18 +3,22 @@ package com.dave.bootstudy.bootstudy
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
-import org.springframework.context.ApplicationContext
-import org.springframework.core.env.Environment
+import org.springframework.context.MessageSource
 import org.springframework.stereotype.Component
+import java.util.*
+import kotlin.concurrent.thread
 
 @Component
 class Runner: ApplicationRunner {
 
     @Autowired
-    lateinit var ctx: ApplicationContext
+    lateinit var messageSource: MessageSource
 
     override fun run(args: ApplicationArguments?) {
-        val environment: Environment = ctx.environment
-        println(environment.getProperty("app.about"))
+        while (true) {
+            println(messageSource.getMessage("greetings", arrayOf("Kim"), Locale.getDefault()))
+            println(messageSource.getMessage("greeting", arrayOf("Kim"), Locale.KOREA))
+            Thread.sleep(1000)
+        }
     }
 }
